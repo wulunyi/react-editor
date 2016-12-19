@@ -10,7 +10,7 @@ export function filter(html) {
   let mat = html.match(/<!--\s*StartFragment\s*-->([\s\S]*?)<!--\s*EndFragment\s*-->/i)
   if (mat) html = mat[1]
   mat = html.match(/<body(>| [^>]*>)([\s\S]*?)<\/body>/i)
-  if (mat) html = mat[1]
+  if (mat) html = mat[2]
   const $src = $('<div>').html(html)
   const $dest = $('<div>')
   filterContent.call(this, $src, $dest) // pass `this`
