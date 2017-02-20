@@ -75,8 +75,8 @@ function filterContent($src, $dest) {
     }
 
     if ($node.is('br')) {
-      // getLine().append('<br>')
-      getLine(true) // br直接转div
+      getLine().append('<br>')
+      // getLine(true) // br直接转div
       return
     }
 
