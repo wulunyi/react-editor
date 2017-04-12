@@ -151,20 +151,17 @@ export default class Editor extends Component {
         setTimeout(() => { this.insertText(text) })
       }
     }
-    const isImage = hasImage && (!html && !text)
 
-    let isTable = false
-    if (html) {
-      // 来自filter函数的部分逻辑
-      const mat = html.match(/<body(>| [^>]*>)([\s\S]*?)<\/body>/i)
-      if (mat) {
-        const div = document.createElement('div')
-        div.innerHTML = mat[2]
-        if (div.querySelector('table')) {
-          isTable = true
-        }
-      }
-    }
+    // todo: google搜索结果页 如复制左上角google图标
+    // 会带上text为url 暂时未能识别为isCommonImage
+    let mat
+    const isCommonImage = hasImage && !html && !text
+    const isMacNotesImage = hasImage && text === '\uFFFC' &&
+      html && (mat = html.match(/<body(>| [^>]*>)([\s\S]*?)<\/body>/i)) &&
+      !mat[2].trim()
+
+    const isImage = isCommonImage || isMacNotesImage
+    const isTable = html && html.match(/<table(>| [^>]*>)([\s\S]*?)<\/table>/i)
 
     // 从word/excel粘贴表格 需要提取图片 同QQ
     const pasteImage = hasImage && (isImage || isTable)
