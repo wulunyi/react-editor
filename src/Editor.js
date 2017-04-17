@@ -154,11 +154,12 @@ export default class Editor extends Component {
 
     // todo: google搜索结果页 如复制左上角google图标
     // 会带上text为url 暂时未能识别为isCommonImage
-    let mat
     const isCommonImage = hasImage && !html && !text
-    const isMacNotesImage = hasImage && text === '\uFFFC' &&
-      html && (mat = html.match(/<body(>| [^>]*>)([\s\S]*?)<\/body>/i)) &&
-      !mat[2].trim()
+
+    // mac10.11 body中为空白字符 mac10.12 body中有p/br标签
+    const isMacNotesImage = hasImage && text === '\uFFFC'
+      // html && (mat = html.match(/<body(>| [^>]*>)([\s\S]*?)<\/body>/i)) &&
+      // !mat[2].trim()
 
     const isImage = isCommonImage || isMacNotesImage
     const isTable = html && html.match(/<table(>| [^>]*>)([\s\S]*?)<\/table>/i)
